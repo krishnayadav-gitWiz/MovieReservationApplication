@@ -1,0 +1,336 @@
+{
+  "info": {
+    "name": "Movie Reservation System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"johndoe\",\n  \"password\": \"password123\",\n  \"email\": \"john.doe@example.com\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"johndoe\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "auth", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movies (Public)",
+      "item": [
+        {
+          "name": "Get All Movies",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/movies/public/all"
+          }
+        },
+        {
+          "name": "Get Movie by ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/movies/public/1"
+          }
+        },
+        {
+          "name": "Get Movies by Genre",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/movies/public/genre/Action"
+          }
+        },
+        {
+          "name": "Get Movies by Date",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/movies/public/date/2023-06-10"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movies (Authenticated)",
+      "item": [
+        {
+          "name": "Get All Movies",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/movies/all"
+          }
+        },
+        {
+          "name": "Get Showtimes for Movie",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/movies/1/showtimes"
+          }
+        },
+        {
+          "name": "Get All Seats for Showtime",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/movies/showtimes/1/seats"
+          }
+        },
+        {
+          "name": "Get Available Seats for Showtime",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/movies/showtimes/1/available-seats"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reservations",
+      "item": [
+        {
+          "name": "Get My Reservations",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/reservations/my"
+          }
+        },
+        {
+          "name": "Get My Upcoming Reservations",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/reservations/my/upcoming"
+          }
+        },
+        {
+          "name": "Create Reservation",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"showtimeId\": 1,\n  \"seatIds\": [1, 2, 3]\n}"
+            },
+            "url": "http://localhost:8080/api/reservations"
+          }
+        },
+        {
+          "name": "Cancel Reservation",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/reservations/1/cancel"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Add Movie",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Inception\",\n  \"description\": \"...\",\n  \"posterUrl\": \"https://...\",\n  \"genres\": [\"Action\", \"Adventure\"],\n  \"price\": 12.99,\n  \"durationMinutes\": 148\n}"
+            },
+            "url": "http://localhost:8080/api/movies"
+          }
+        },
+        {
+          "name": "Update Movie",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Inception (IMAX)\",\n  \"description\": \"...\",\n  \"posterUrl\": \"https://...\",\n  \"genres\": [\"Action\", \"Adventure\", \"Thriller\"],\n  \"price\": 14.99,\n  \"durationMinutes\": 148\n}"
+            },
+            "url": "http://localhost:8080/api/movies/4"
+          }
+        },
+        {
+          "name": "Delete Movie",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/movies/4"
+          }
+        },
+        {
+          "name": "Add Showtime",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"movieId\": 2,\n  \"startTime\": \"2023-06-15T18:30:00\",\n  \"totalSeats\": 45,\n  \"theatreHall\": \"Hall B\"\n}"
+            },
+            "url": "http://localhost:8080/api/movies/showtimes"
+          }
+        },
+        {
+          "name": "Update Showtime",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"movieId\": 2,\n  \"startTime\": \"2023-06-15T19:00:00\",\n  \"totalSeats\": 50,\n  \"theatreHall\": \"Hall A\"\n}"
+            },
+            "url": "http://localhost:8080/api/movies/showtimes/5"
+          }
+        },
+        {
+          "name": "Delete Showtime",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/movies/showtimes/5"
+          }
+        },
+        {
+          "name": "Get All Reservations",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/reservations/all"
+          }
+        },
+        {
+          "name": "Get Reservation by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/reservations/1"
+          }
+        },
+        {
+          "name": "Get Reservations by User ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/reservations/user/2"
+          }
+        },
+        {
+          "name": "Promote User to Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/admin/users/2/promote"
+          }
+        },
+        {
+          "name": "Generate Revenue Report",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/admin/reports/revenue"
+          }
+        },
+        {
+          "name": "Generate Occupancy Report",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "url": "http://localhost:8080/api/admin/reports/occupancy-by-theatre"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "jwt_token",
+      "value": ""
+    },
+    {
+      "key": "admin_jwt_token",
+      "value": ""
+    }
+  ]
+}

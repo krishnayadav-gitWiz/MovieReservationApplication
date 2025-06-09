@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "userId": 2,
+    "showtimeId": 1,
+    "seatIds": [3, 4, 5],
+    "reservationTime": "2023-06-05T14:30:25",
+    "totalPrice": 38.97,
+    "cancelled": false
+  },
+  {
+    "id": 2,
+    "userId": 3,
+    "showtimeId": 3,
+    "seatIds": [12, 13],
+    "reservationTime": "2023-06-06T09:15:40",
+    "totalPrice": 21.98,
+    "cancelled": false
+  },
+  {
+    "id": 3,
+    "userId": 2,
+    "showtimeId": 4,
+    "seatIds": [22],
+    "reservationTime": "2023-06-06T18:45:10",
+    "totalPrice": 11.99,
+    "cancelled": true
+  },
+  {
+    "id": 4,
+    "userId": 4,
+    "showtimeId": 2,
+    "seatIds": [31, 32, 33, 34],
+    "reservationTime": "2023-06-07T12:20:15",
+    "totalPrice": 51.96,
+    "cancelled": false
+  },
+  {
+    "id": 5,
+    "userId": 3,
+    "showtimeId": 1,
+    "seatIds": [8, 9],
+    "reservationTime": "2023-06-08T08:05:35",
+    "totalPrice": 25.98,
+    "cancelled": false
+  }
+]
